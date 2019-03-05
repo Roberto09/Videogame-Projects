@@ -20,9 +20,11 @@ public class Game implements Runnable{
     private long  now; //define now to use inside loop
     private long lastTime = System.nanoTime(); // initializing last time to the computer time in nanosecs
 
-    //players
+    //player
     private Player player;
-    private ComputerPlayer computerPlayer;
+    
+    //ball
+    private Ball ball;
 
     //Life system
     private Lives lives;
@@ -64,8 +66,7 @@ public class Game implements Runnable{
             g.drawImage(Assets.background, 0, 0, width, height, null);
             //renderizamos el player
             player.render(g);
-            //renderizamos el comp uter player
-            computerPlayer.render(g);
+            ball.render(g);
             //renderizamos las lives
             lives.render(g);
             //renderizamos el game over cuando las vidas se acaban
@@ -81,8 +82,8 @@ public class Game implements Runnable{
         keyManager.tick();
         //actualizamos el tick del player
         player.tick();
-        //actualizamos el tick de edl computerPlayer
-        computerPlayer.tick();
+        //actualizamos el tick de la ball
+        ball.tick();
     }
 
     //initializes out game display
@@ -91,9 +92,10 @@ public class Game implements Runnable{
         //inicializamos assets del juego
         Assets.init();
         //inicializamos el player
-        player = new Player(1, getHeight() - 101, 1, 100, 100, this);
-        //inicializamos el computerPlayer
-        computerPlayer = new ComputerPlayer(getWidth() - 101 ,1, 100, 100, 100, this);
+        player = new Player(getWidth()/2-70, getHeight() - 100, 1, 140, 28, this);
+        //inizializamos la ball
+        ball = new Ball(getWidth()/2-17, getHeight() - 300, 1, 35, 35, this);
+        
         display.getjFrame().addKeyListener(keyManager);
         display.getjFrame().addMouseListener(mouseManager);
         display.getjFrame().addMouseMotionListener(mouseManager);

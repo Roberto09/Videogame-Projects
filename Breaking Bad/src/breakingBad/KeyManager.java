@@ -1,5 +1,4 @@
 package breakingBad;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,7 +14,7 @@ public class KeyManager implements KeyListener {
         keys = new boolean [256];
     }
 
-    //manejar estados de flechas en cada tick
+    //manage states of arrows on every click
     public void tick() {
         upPrev = up;
         up = keys[KeyEvent.VK_UP];

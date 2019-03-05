@@ -17,41 +17,38 @@ public class Player extends Item{
     private int yVelocity;
     private Timer changeImageTimer;
     private boolean changeImageInCollition;
-    private boolean canDrag;
 
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
-        this.xVelocity = 0;
-        this.yVelocity = 0;
+        this.xVelocity = 3;
+        this.yVelocity = 3;
         this.changeImageTimer = new Timer(game.getFps());
         this.changeImageInCollition = false;
         this.area = new Rectangle(x, y, width, height);
-        this.canDrag = false;
     }
 
     @Override
     public void tick() {
-        //adding the current velocity on both axis
-        setY(getY() + yVelocity);
-        setX(getX() + xVelocity);
         area.setLocation(x, y);
-
         //check if we need to change the image back
         if (changeImageTimer != null && changeImageTimer.isActive() && changeImageTimer.doneWaiting()) {
             //change image back
             changeImageInCollition = false;
         }
 
-        if(!canDrag && game.getMouseManager().isIzquierdo() && area.contains(game.getMouseManager().getX(), game.getMouseManager().getY())) canDrag = true;
-        else if(!game.getMouseManager().isIzquierdo()) canDrag = false;
-
-        //checking for presses in mouse
-        if (canDrag) {
-            setX(game.getMouseManager().getX() - width / 2);
-            setY(game.getMouseManager().getY() - height / 2);
+       //checking for presses in keys
+        //left press
+        if(game.getKeyManager().left) {
+            //substract in x axis
+            setX(getX() - xVelocity);
+        }
+        //right press
+        if(game.getKeyManager().right) {
+            //add in x axis
+            setX(getX() + xVelocity);
         }
 
         //Managing screen collisions
@@ -100,7 +97,6 @@ public class Player extends Item{
         //generating a new random position
         setX(RandomGenerator.generate(1, game.getWidth() / 2 - 100));
         setY(RandomGenerator.generate(1, game.getHeight() - getHeight()));
-        canDrag = false;
     }
 
     public Rectangle getArea(){

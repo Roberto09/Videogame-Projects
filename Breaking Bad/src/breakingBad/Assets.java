@@ -10,7 +10,7 @@ public class Assets {
     public static BufferedImage background;
     public static BufferedImage player;
     public static BufferedImage playerSecond;
-    public static BufferedImage computerPlayer;
+    public static BufferedImage ball;
     public static BufferedImage livesText;
     public static BufferedImage gameOver;
 
@@ -21,9 +21,9 @@ public class Assets {
     public static void init() {
         //Images
         background = ImageLoader.loadImage("/Images/background.jpg");
-        player = ImageLoader.loadImage("/Images/spaceship.png");
+        player = ImageLoader.loadImage("/Images/barra.JPG");
         playerSecond = ImageLoader.loadImage("/Images/explosion1.png");
-        computerPlayer = ImageLoader.loadImage("/Images/asteroid-icon.png");
+        ball = ImageLoader.loadImage("/Images/ball.png");
         livesText = ImageLoader.loadImage("/Images/LivesLeft.png");
         gameOver = ImageLoader.loadImage("/Images/gameover.png");
 
