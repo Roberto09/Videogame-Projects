@@ -6,6 +6,9 @@ public class Player extends Item{
 
     //Game
     private Game game;
+    
+   //Ball ball
+    private Ball ball;
 
     //Dimenstions
     private int width;
@@ -28,6 +31,7 @@ public class Player extends Item{
         this.changeImageTimer = new Timer(game.getFps());
         this.changeImageInCollition = false;
         this.area = new Rectangle(x, y, width, height);
+        this.ball = game.getBall();
     }
 
     @Override
@@ -80,6 +84,18 @@ public class Player extends Item{
             changeImageTimer.setUp(.5);
             //change picture
             changeImageInCollition = true;
+        }
+        
+        
+        //checking collision with ball
+        //check if collision was made
+        if(this.getArea().contains(ball.getX() + ball.getWidth()/2, ball.getY() + ball.getHeight())){
+            int position = 140 - (ball.getX()+ball.getWidth()/2 - getX());
+            System.out.println(position);
+            double xDirection = 4 * Math.cos(Math.toRadians((double) position * (180.0/140.0)));
+            double yDirection = -4 * Math.sin(Math.toRadians((double) position * (180.0/140.0)));
+            System.out.println("ydir = " + yDirection);
+            ball.changeVelocity(xDirection, yDirection);
         }
     }
 

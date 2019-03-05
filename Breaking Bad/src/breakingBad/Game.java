@@ -91,10 +91,10 @@ public class Game implements Runnable{
         display = new Display(title, width, height);
         //inicializamos assets del juego
         Assets.init();
-        //inicializamos el player
-        player = new Player(getWidth()/2-70, getHeight() - 100, 1, 140, 28, this);
         //inizializamos la ball
         ball = new Ball(getWidth()/2-17, getHeight() - 300, 1, 35, 35, this);
+        //inicializamos el player
+        player = new Player(getWidth()/2-70, getHeight() - 100, 1, 140, 28, this);
         
         display.getjFrame().addKeyListener(keyManager);
         display.getjFrame().addMouseListener(mouseManager);
@@ -163,6 +163,11 @@ public class Game implements Runnable{
     //methodd to get Player
     public Player getPlayer(){
         return player;
+    }
+    
+    //mehtod to get ball
+    public Ball getBall(){
+        return ball;
     }
 
 }
