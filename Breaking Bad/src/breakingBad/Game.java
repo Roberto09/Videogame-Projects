@@ -32,6 +32,9 @@ public class Game implements Runnable{
     //key and mouse manager
     KeyManager keyManager;
     MouseManager mouseManager;
+    
+    //pause mechanic
+    boolean isPaused = false;
 
     //method that cotains cycle that executes the instructions to run our game
     @Override
@@ -42,8 +45,14 @@ public class Game implements Runnable{
             delta += (now - lastTime) / timeTick;
             lastTime = now;
             if (delta >= 1) {
+                //key manager updates
+                keyManager.tick();
+                //check for pauses press
+                if(keyManager.pause && !keyManager.pausePrev) isPaused = !isPaused;
                 if(!lives.livesOver()){
-                    tick();
+                    //if it's not paused execute the tick
+                    if(!isPaused)
+                        tick();
                     render();
                 }
                 else
@@ -78,8 +87,6 @@ public class Game implements Runnable{
     }
 
     private void tick(){
-        //key manager updates
-        keyManager.tick();
         //actualizamos el tick del player
         player.tick();
         //actualizamos el tick de la ball
@@ -169,5 +176,5 @@ public class Game implements Runnable{
     public Ball getBall(){
         return ball;
     }
-
+    //test
 }
