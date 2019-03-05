@@ -7,6 +7,7 @@ public class KeyManager implements KeyListener {
     public boolean down, downPrev;
     public boolean left,leftPrev;
     public boolean right, rightPrev;
+    public boolean pause, pausePrev;
 
     private boolean keys[];
 
@@ -27,6 +28,9 @@ public class KeyManager implements KeyListener {
 
         rightPrev = right;
         right = keys[KeyEvent.VK_RIGHT];
+        
+        pausePrev = pause;
+        pause = keys[KeyEvent.VK_P];
     }
 
     @Override
