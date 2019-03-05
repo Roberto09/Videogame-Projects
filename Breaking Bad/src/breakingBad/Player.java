@@ -91,10 +91,8 @@ public class Player extends Item{
         //check if collision was made
         if(this.getArea().contains(ball.getX() + ball.getWidth()/2, ball.getY() + ball.getHeight())){
             int position = 140 - (ball.getX()+ball.getWidth()/2 - getX());
-            System.out.println(position);
-            double xDirection = 4 * Math.cos(Math.toRadians((double) position * (180.0/140.0)));
-            double yDirection = -4 * Math.sin(Math.toRadians((double) position * (180.0/140.0)));
-            System.out.println("ydir = " + yDirection);
+            double xDirection = 8 * Math.cos(Math.toRadians((double) position * (180.0/140.0)));
+            double yDirection = -8 * Math.sin(Math.toRadians((double) position * (180.0/140.0)));
             ball.changeVelocity(xDirection, yDirection);
         }
     }

@@ -31,7 +31,7 @@ public class Ball extends Item{
         this.height = height;
         this.game = game;
         this.xVelocity = 0;
-        this.yVelocity = -4;
+        this.yVelocity = -8;
         this.xDisplacement = 0;
         this.yDisplacement = 0;
         this.area = new Rectangle(x, y, width, height);
@@ -54,21 +54,25 @@ public class Ball extends Item{
         //right border collision
         if(getX() + getWidth() >= game.getWidth()){
             setX(game.getWidth() - getWidth());
+            xDisplacement *= -1;
             xVelocity *= -1;
         }
         //left border collision
         if(getX() <= 0) {
             setX(0);
+            xDisplacement *= -1;
             xVelocity *= -1;
         }
         //up border collision
         if(getY() <= 0){
             setY(0);
+            yDisplacement *= -1;
             yVelocity *= -1;
         }
         //down border collission
         if(getY() + getHeight() >= game.getHeight()){
             setY(game.getHeight() - getHeight());
+            yDisplacement *= -1;
             yVelocity *= -1;
         }
     }
