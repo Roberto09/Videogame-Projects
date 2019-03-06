@@ -2,6 +2,7 @@ package breakingBad;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 public class Game implements Runnable{
     private BufferStrategy bs; //to have several buffers when displaying
@@ -25,7 +26,10 @@ public class Game implements Runnable{
     
     //ball
     private Ball ball;
-
+    
+    //bricks
+    private ArrayList<Brick> bricks; 
+    
     //Life system
     private Lives lives;
 
@@ -86,6 +90,9 @@ public class Game implements Runnable{
             //renderizamos el player
             player.render(g);
             ball.render(g);
+            //renderizamos los ladrillos
+            for(int i=0; i<bricks.size(); i++)
+                bricks.get(i).render(g);
             //renderizamos las lives
             lives.render(g);
             //renderizamos el game over cuando las vidas se acaban
@@ -101,6 +108,9 @@ public class Game implements Runnable{
         player.tick();
         //actualizamos el tick de la ball
         ball.tick();
+        //actualizamos el tick de los jugadores
+        for(int i=0; i<bricks.size(); i++)
+            bricks.get(i).tick();
     }
 
     //initializes out game display
@@ -109,11 +119,17 @@ public class Game implements Runnable{
         //inicializamos assets del juego
         Assets.init();
         //inizializamos la ball
-        ball = new Ball(getWidth()/2-17, getHeight() - 150, 1, 35, 35, this);
+        ball = new Ball(getWidth()-70, getHeight() , 1, 15, 15, this);
         //inicializamos el player
-        player = new Player(getWidth()/2-70, getHeight() - 100, 1, 140, 28, this);
-        //inicializamos la game session
+        player = new Player(getWidth()/2-70, getHeight() - 50, 1, 140, 28, this);
+        //game session
         gs = new GameSession(this);
+        //inizializamos los ladrillos
+        for(int i=50; i<750; i+=110){
+            for(int j=50; j<300; j+=70){
+                bricks.add(new Brick(i,j,80, 50, 2, this));
+            }
+        }
         
         display.getjFrame().addKeyListener(keyManager);
         display.getjFrame().addMouseListener(mouseManager);
@@ -152,6 +168,7 @@ public class Game implements Runnable{
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
         lives = new Lives(3);
+        bricks = new ArrayList<>();
     }
 
     public int getWidth() {
@@ -188,5 +205,8 @@ public class Game implements Runnable{
     public Ball getBall(){
         return ball;
     }
-    //test
+    
+    public void eraseBrick(Brick delete){
+        bricks.remove(delete);
+    }
 }

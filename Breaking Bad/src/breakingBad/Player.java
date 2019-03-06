@@ -10,7 +10,7 @@ public class Player extends Item{
    //Ball ball
     private Ball ball;
 
-    //Dimenstions
+    //Dimensions
     private int width;
     private int height;
     Rectangle area;
