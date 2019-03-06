@@ -37,7 +37,6 @@ public class Ball extends Item{
         this.area = new Rectangle(x, y, width, height);
     }
     
-    @Override
     public void tick() {
         area.setLocation(x, y);
         //setting xvelocity
@@ -49,7 +48,7 @@ public class Ball extends Item{
         yDisplacement += yVelocity;
         setY((int) (getY() + Math.round(yDisplacement)));
         yDisplacement %= .5;
-        
+       
         //Managing screen collisions
         //right border collision
         if(getX() + getWidth() >= game.getWidth()){
@@ -93,6 +92,14 @@ public class Ball extends Item{
         yVelocity = newY;
     }
 
+    public double getxVelocity() {
+        return xVelocity;
+    }
+
+    public double getyVelocity() {
+        return yVelocity;
+    }
+
     public Rectangle getArea(){
         return area;
     }
@@ -112,4 +119,22 @@ public class Ball extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public void setxDisplacement(double xDisplacement) {
+        this.xDisplacement = xDisplacement;
+    }
+
+    public void setyDisplacement(double yDisplacement) {
+        this.yDisplacement = yDisplacement;
+    }
+
+    public double getxDisplacement() {
+        return xDisplacement;
+    }
+
+    public double getyDisplacement() {
+        return yDisplacement;
+    }
+    
+    
 }
