@@ -35,6 +35,9 @@ public class Game implements Runnable{
     
     //pause mechanic
     boolean isPaused = false;
+    
+    //game sesison
+    GameSession gs;
 
     //method that cotains cycle that executes the instructions to run our game
     @Override
@@ -49,6 +52,13 @@ public class Game implements Runnable{
                 keyManager.tick();
                 //check for pauses press
                 if(keyManager.pause && !keyManager.pausePrev) isPaused = !isPaused;
+                
+                //check for save press
+                if(keyManager.save && !keyManager.savePrev) gs.save();
+                
+                //check for recover press
+                if(keyManager.load && !keyManager.loadPrev) gs.resumePastSave();
+                
                 if(!lives.livesOver()){
                     //if it's not paused execute the tick
                     if(!isPaused)
@@ -99,9 +109,11 @@ public class Game implements Runnable{
         //inicializamos assets del juego
         Assets.init();
         //inizializamos la ball
-        ball = new Ball(getWidth()/2-17, getHeight() - 300, 1, 35, 35, this);
+        ball = new Ball(getWidth()/2-17, getHeight() - 150, 1, 35, 35, this);
         //inicializamos el player
         player = new Player(getWidth()/2-70, getHeight() - 100, 1, 140, 28, this);
+        //inicializamos la game session
+        gs = new GameSession(this);
         
         display.getjFrame().addKeyListener(keyManager);
         display.getjFrame().addMouseListener(mouseManager);

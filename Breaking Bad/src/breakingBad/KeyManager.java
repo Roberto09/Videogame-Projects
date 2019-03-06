@@ -8,6 +8,8 @@ public class KeyManager implements KeyListener {
     public boolean left,leftPrev;
     public boolean right, rightPrev;
     public boolean pause, pausePrev;
+    public boolean save, savePrev;
+    public boolean load, loadPrev;
 
     private boolean keys[];
 
@@ -31,6 +33,12 @@ public class KeyManager implements KeyListener {
         
         pausePrev = pause;
         pause = keys[KeyEvent.VK_P];
+        
+        savePrev = save;
+        save = keys[KeyEvent.VK_S];
+        
+        loadPrev = load;
+        load = keys[KeyEvent.VK_L];
     }
 
     @Override

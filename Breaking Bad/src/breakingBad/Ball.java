@@ -18,8 +18,8 @@ public class Ball extends Item{
     private int width;
     private int height;
     Rectangle area;
-
-    //velocity and dynamics
+    
+    //Velocity and dynamics
     private double xVelocity;
     private double yVelocity;
     private double xDisplacement;
@@ -88,6 +88,15 @@ public class Ball extends Item{
         setY(RandomGenerator.generate(1, game.getHeight() - getHeight()));
     }
     
+    public void reset(int x, int y, double xV, double yV, double xDisp, double yDisp){
+        this.x = x;
+        this.y = y;
+        this.xVelocity = xV;
+        this.yVelocity = yV;
+        this.xDisplacement = xDisp;
+        this.yDisplacement = yDisp;
+    }
+    
     public void changeVelocity(double newX, double newY){
         xVelocity = newX;
         yVelocity = newY;
@@ -111,5 +120,38 @@ public class Ball extends Item{
 
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+        public double getxVelocity() {
+        return xVelocity;
+    }
+
+    public void setxVelocity(double xVelocity) {
+        this.xVelocity = xVelocity;
+    }
+
+    public double getyVelocity() {
+        return yVelocity;
+    }
+
+    public void setyVelocity(double yVelocity) {
+        this.yVelocity = yVelocity;
+    }
+
+    public double getxDisplacement() {
+        return xDisplacement;
+    }
+
+    public void setxDisplacement(double xDisplacement) {
+        this.xDisplacement = xDisplacement;
+    }
+
+    public double getyDisplacement() {
+        return yDisplacement;
+    }
+
+    //velocity and dynamics
+    public void setyDisplacement(double yDisplacement) {
+        this.yDisplacement = yDisplacement;
     }
 }
