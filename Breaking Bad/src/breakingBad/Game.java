@@ -36,6 +36,12 @@ public class Game implements Runnable{
     //key and mouse manager
     KeyManager keyManager;
     MouseManager mouseManager;
+    
+    //pause mechanic
+    boolean isPaused = false;
+    
+    //game sesison
+    GameSession gs;
 
     //method that cotains cycle that executes the instructions to run our game
     @Override
@@ -46,8 +52,21 @@ public class Game implements Runnable{
             delta += (now - lastTime) / timeTick;
             lastTime = now;
             if (delta >= 1) {
+                //key manager updates
+                keyManager.tick();
+                //check for pauses press
+                if(keyManager.pause && !keyManager.pausePrev) isPaused = !isPaused;
+                
+                //check for save press
+                if(keyManager.save && !keyManager.savePrev) gs.save();
+                
+                //check for recover press
+                if(keyManager.load && !keyManager.loadPrev) gs.resumePastSave();
+                
                 if(!lives.livesOver()){
-                    tick();
+                    //if it's not paused execute the tick
+                    if(!isPaused)
+                        tick();
                     render();
                 }
                 else
@@ -85,8 +104,6 @@ public class Game implements Runnable{
     }
 
     private void tick(){
-        //key manager updates
-        keyManager.tick();
         //actualizamos el tick del player
         player.tick();
         //actualizamos el tick de la ball
@@ -105,6 +122,8 @@ public class Game implements Runnable{
         ball = new Ball(getWidth()-70, getHeight() , 1, 15, 15, this);
         //inicializamos el player
         player = new Player(getWidth()/2-70, getHeight() - 50, 1, 140, 28, this);
+        //game session
+        gs = new GameSession(this);
         //inizializamos los ladrillos
         for(int i=50; i<750; i+=110){
             for(int j=50; j<300; j+=70){
@@ -190,10 +209,4 @@ public class Game implements Runnable{
     public void eraseBrick(Brick delete){
         bricks.remove(delete);
     }
-
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-    
-    
 }

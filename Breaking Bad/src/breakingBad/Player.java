@@ -112,6 +112,11 @@ public class Player extends Item{
         setX(RandomGenerator.generate(1, game.getWidth() / 2 - 100));
         setY(RandomGenerator.generate(1, game.getHeight() - getHeight()));
     }
+    
+    public void reset(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 
     public Rectangle getArea(){
         return area;
