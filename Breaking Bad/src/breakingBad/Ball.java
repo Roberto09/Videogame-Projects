@@ -135,7 +135,8 @@ public class Ball extends Item{
 
     public void setyVelocity(double yVelocity) {
         this.yVelocity = yVelocity;
-
+    }
+    
     public void setxDisplacement(double xDisplacement) {
         this.xDisplacement = xDisplacement;
     }
