@@ -37,8 +37,10 @@ public class Game implements Runnable{
     KeyManager keyManager;
     MouseManager mouseManager;
     
-    //pause mechanic
+    //pause mechanics
     boolean isPaused = false;
+    boolean isOnSaveScreen = false;
+    boolean isOnLoadScreen = false;
     
     //game sesison
     GameSession gs;
@@ -55,13 +57,33 @@ public class Game implements Runnable{
                 //key manager updates
                 keyManager.tick();
                 //check for pauses press
-                if(keyManager.pause && !keyManager.pausePrev) isPaused = !isPaused;
-                
+                if(keyManager.pause && !keyManager.pausePrev){
+                    isPaused = !isPaused;
+                }
                 //check for save press
-                if(keyManager.save && !keyManager.savePrev) gs.save();
-                
+                if(keyManager.save && !keyManager.savePrev){
+                    if(isOnSaveScreen) gs.save();
+                    isOnSaveScreen = !isOnSaveScreen;
+                    isPaused = !isPaused;
+                }
+                    
                 //check for recover press
-                if(keyManager.load && !keyManager.loadPrev) gs.resumePastSave();
+                if(keyManager.load && !keyManager.loadPrev){
+                    if(isOnLoadScreen) gs.resumePastSave();
+                    isOnLoadScreen = !isOnLoadScreen;
+                    isPaused = !isPaused;
+                }
+                
+                if(keyManager.cancel && !keyManager.cancelPrev){
+                    if(isOnSaveScreen){
+                        isPaused = !isPaused;
+                        isOnSaveScreen = !isOnSaveScreen;
+                    }
+                    else if(isOnLoadScreen){
+                        isPaused = !isPaused;
+                        isOnLoadScreen = !isOnLoadScreen;
+                    }
+                }
                 
                 if(!lives.livesOver()){
                     //if it's not paused execute the tick
@@ -98,6 +120,16 @@ public class Game implements Runnable{
             //renderizamos el game over cuando las vidas se acaban
             if(lives.livesOver())
                 g.drawImage(Assets.gameOver, 310, 200, getWidth()-620, getHeight()-400, null);
+            //renderizamos la image del pause
+            if(isPaused && !isOnSaveScreen && !isOnLoadScreen){
+                g.drawImage(Assets.pauseImage, 150, 100, getWidth()-300, getHeight()-200, null);
+            }
+            if(isOnSaveScreen){
+                g.drawImage(Assets.saveImage, 150, 100, getWidth()-300, getHeight()-200, null);
+            }
+            if(isOnLoadScreen){
+                g.drawImage(Assets.loadImage, 150, 100, getWidth()-300, getHeight()-200, null);
+            }
             bs.show();
             g.dispose();
         }
@@ -208,5 +240,13 @@ public class Game implements Runnable{
     
     public void eraseBrick(Brick delete){
         bricks.remove(delete);
+    }
+    
+    public ArrayList<Brick> getBricks(){
+        return bricks;
+    }
+    
+    public void setBricks(ArrayList<Brick> bricks){
+        this.bricks = bricks;
     }
 }

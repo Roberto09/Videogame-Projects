@@ -18,7 +18,7 @@ public class Lives extends Item{
 
     //method to reduce lifes
     public void looseLife(){
-        lifeCount--;
+        lifeCount--; 
     }
     //method to ask if lives are over
     public boolean livesOver(){

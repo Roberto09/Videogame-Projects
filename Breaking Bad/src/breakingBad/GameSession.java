@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -53,6 +54,19 @@ public class GameSession {
         barX = sessionData.getJSONObject("Bar").getInt("x");
         barY = sessionData.getJSONObject("Bar").getInt("y");
         game.getPlayer().reset(barX, barY);
+        
+        //Birck reset
+        ArrayList<Brick> newBricks = new ArrayList();
+        for(int i = 0; i < sessionData.getJSONArray("Bricks").length(); i++){
+            int x, y, potencia, width, height;
+            x = ((JSONObject)sessionData.getJSONArray("Bricks").get(i)).getInt("x");
+            y = ((JSONObject)sessionData.getJSONArray("Bricks").get(i)).getInt("y");
+            width = ((JSONObject)sessionData.getJSONArray("Bricks").get(i)).getInt("w");
+            height = ((JSONObject)sessionData.getJSONArray("Bricks").get(i)).getInt("h");
+            potencia = ((JSONObject)sessionData.getJSONArray("Bricks").get(i)).getInt("p");
+            newBricks.add(new Brick(x, y, width, height, potencia, game));
+        }
+        game.setBricks(newBricks);
     }
     
     public void save(){
@@ -68,10 +82,24 @@ public class GameSession {
         Ball.put("yD", game.getBall().getyDisplacement());
         
         JSONObject Bar = new JSONObject();
-        //Ball save
+        //Bar save
         Bar.put("x", game.getPlayer().getX());
         Bar.put("y", game.getPlayer().getY());
         
+        //Brick save
+        JSONArray bricks = new JSONArray();
+        ArrayList<Brick> originalBricks = game.getBricks();
+        for(int i = 0; i < originalBricks.size(); i++){
+            JSONObject br = new JSONObject();
+            br.put("x", originalBricks.get(i).getX());
+            br.put("y", originalBricks.get(i).getY());
+            br.put("w", originalBricks.get(i).getWidth());
+            br.put("h", originalBricks.get(i).getHeight());
+            br.put("p", originalBricks.get(i).getPotencia());
+            bricks.put(br);
+        }
+        
+        fileObject.put("Bricks", bricks);
         fileObject.put("Ball", Ball);
         fileObject.put("Bar", Bar);
         

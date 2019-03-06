@@ -19,7 +19,7 @@ public class Brick extends Item {
 
     //Ball ball
     private Ball ball;
-
+    
     // Diemensions
     private int width;
     private int height;
@@ -50,6 +50,10 @@ public class Brick extends Item {
 
     public Rectangle getDown() {
         return down;
+    }
+    
+    public int getPotencia(){
+        return potencia;
     }
 
     
@@ -98,8 +102,6 @@ public class Brick extends Item {
                 ball.setY(ball.getY()+20);
             else
                 ball.setY(ball.getY()-20);
-            System.out.println(ball.getyVelocity());
-            System.out.println(ball.getyDisplacement());
             //game.setRunning(false);
             potencia -= 1;
         }
