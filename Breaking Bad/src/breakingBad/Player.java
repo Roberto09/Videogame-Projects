@@ -26,8 +26,8 @@ public class Player extends Item{
         this.width = width;
         this.height = height;
         this.game = game;
-        this.xVelocity = 3;
-        this.yVelocity = 3;
+        this.xVelocity = 15;
+        this.yVelocity = 15;
         this.changeImageTimer = new Timer(game.getFps());
         this.changeImageInCollition = false;
         this.area = new Rectangle(x, y, width, height);

@@ -33,7 +33,7 @@ public class Assets {
         playerSecond = ImageLoader.loadImage("/Images/explosion1.png");
         ball = ImageLoader.loadImage("/Images/ball.png");
         livesText = ImageLoader.loadImage("/Images/LivesLeft.png");
-        gameOver = ImageLoader.loadImage("/Images/gameover.png");
+        gameOver = ImageLoader.loadImage("/Images/gameover.JPG");
         bricks.add(ImageLoader.loadImage("/Images/white-block.png"));
         bricks.add(ImageLoader.loadImage("/Images/blue-block.png"));
         bricks.add(ImageLoader.loadImage("/Images/red-block.png"));

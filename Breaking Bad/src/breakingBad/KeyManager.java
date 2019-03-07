@@ -11,6 +11,8 @@ public class KeyManager implements KeyListener {
     public boolean save, savePrev;
     public boolean load, loadPrev;
     public boolean cancel, cancelPrev;
+    public boolean space, spacePrev;
+    public boolean enter, enterPrev;
 
     private boolean keys[];
 
@@ -43,6 +45,12 @@ public class KeyManager implements KeyListener {
         
         cancelPrev = cancel;
         cancel = keys[KeyEvent.VK_X];
+        
+        spacePrev = space;
+        space = keys[KeyEvent.VK_SPACE];
+        
+        enterPrev = enter;
+        enter = keys[KeyEvent.VK_ENTER];
     }
 
     @Override

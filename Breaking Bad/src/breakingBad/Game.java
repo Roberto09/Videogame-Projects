@@ -38,9 +38,10 @@ public class Game implements Runnable{
     MouseManager mouseManager;
     
     //pause mechanics
-    boolean isPaused = false;
-    boolean isOnSaveScreen = false;
-    boolean isOnLoadScreen = false;
+    private boolean isPaused = false;
+    private boolean isOnSaveScreen = false;
+    private boolean isOnLoadScreen = false;
+    private boolean gameIsOver = false;
     
     //game sesison
     GameSession gs;
@@ -74,6 +75,26 @@ public class Game implements Runnable{
                     isPaused = !isPaused;
                 }
                 
+                //check for game over
+                if(gameIsOver || bricks.isEmpty()){
+                    if(keyManager.enter && !keyManager.enterPrev){
+                        isPaused = false;
+                        //reseteamos la ball
+                        ball.reset();
+                        //reseteamos el player
+                        player.reset(getWidth()/2-70, getHeight() - 50);
+                        //reseteamos los bricks
+                        bricks = new ArrayList();
+                        for(int i=50; i<750; i+=110){
+                            for(int j=50; j<300; j+=70){
+                                bricks.add(new Brick(i,j,80, 50, 2, this));
+                            }
+                        }
+                        gameIsOver = false;
+                    }
+                    else isPaused = true;
+                }
+
                 if(keyManager.cancel && !keyManager.cancelPrev){
                     if(isOnSaveScreen){
                         isPaused = !isPaused;
@@ -84,15 +105,10 @@ public class Game implements Runnable{
                         isOnLoadScreen = !isOnLoadScreen;
                     }
                 }
-                
-                if(!lives.livesOver()){
-                    //if it's not paused execute the tick
-                    if(!isPaused)
-                        tick();
-                    render();
-                }
-                else
-                    render();
+                //if it's not paused execute the tick
+                if(!isPaused)
+                    tick();
+                render();
                 delta--;
             }
         }
@@ -129,6 +145,9 @@ public class Game implements Runnable{
             }
             if(isOnLoadScreen){
                 g.drawImage(Assets.loadImage, 150, 100, getWidth()-300, getHeight()-200, null);
+            }
+            if(gameIsOver){
+                g.drawImage(Assets.gameOver, 150, 100, getWidth()-300, getHeight()-200, null);
             }
             bs.show();
             g.dispose();
@@ -248,5 +267,13 @@ public class Game implements Runnable{
     
     public void setBricks(ArrayList<Brick> bricks){
         this.bricks = bricks;
+    }
+    
+    void setGameIsOver(boolean gameIsOver){
+        this.gameIsOver = gameIsOver;
+    }
+    
+    boolean getGameIsOver(){
+        return gameIsOver;
     }
 }

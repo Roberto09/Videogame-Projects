@@ -42,13 +42,15 @@ public class GameSession {
         //Ball reset
         int bX, bY;
         double xVel, yVel, xDisp, yDisp;
+        boolean stickToBar;
         bX = sessionData.getJSONObject("Ball").getInt("x");
         bY = sessionData.getJSONObject("Ball").getInt("y");
         xVel = sessionData.getJSONObject("Ball").getDouble("xV");
         yVel = sessionData.getJSONObject("Ball").getDouble("yV");
         xDisp = sessionData.getJSONObject("Ball").getDouble("xD");
         yDisp = sessionData.getJSONObject("Ball").getDouble("yD");
-        game.getBall().reset(bX, bY, xVel, yVel, xDisp, yDisp);
+        stickToBar = sessionData.getJSONObject("Ball").getBoolean("sB");
+        game.getBall().reset(bX, bY, xVel, yVel, xDisp, yDisp, stickToBar);
         //Bar reset
         int barX, barY;
         barX = sessionData.getJSONObject("Bar").getInt("x");
@@ -72,14 +74,15 @@ public class GameSession {
     public void save(){
         JSONObject fileObject = new JSONObject();
         
-        JSONObject Ball = new JSONObject();
+        JSONObject ball = new JSONObject();
         //Ball save
-        Ball.put("x", game.getBall().getX());
-        Ball.put("y", game.getBall().getY());  
-        Ball.put("xV", game.getBall().getxVelocity());
-        Ball.put("yV", game.getBall().getyVelocity());
-        Ball.put("xD", game.getBall().getxDisplacement());
-        Ball.put("yD", game.getBall().getyDisplacement());
+        ball.put("x", game.getBall().getX());
+        ball.put("y", game.getBall().getY());  
+        ball.put("xV", game.getBall().getxVelocity());
+        ball.put("yV", game.getBall().getyVelocity());
+        ball.put("xD", game.getBall().getxDisplacement());
+        ball.put("yD", game.getBall().getyDisplacement());
+        ball.put("sB", game.getBall().getStickToBar());
         
         JSONObject Bar = new JSONObject();
         //Bar save
@@ -100,7 +103,7 @@ public class GameSession {
         }
         
         fileObject.put("Bricks", bricks);
-        fileObject.put("Ball", Ball);
+        fileObject.put("Ball", ball);
         fileObject.put("Bar", Bar);
         
         FileWriter writer;  
