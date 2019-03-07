@@ -18,8 +18,6 @@ public class Player extends Item{
     //velocity and dynamics
     private int xVelocity;
     private int yVelocity;
-    private Timer changeImageTimer;
-    private boolean changeImageInCollition;
 
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
@@ -28,8 +26,6 @@ public class Player extends Item{
         this.game = game;
         this.xVelocity = 3;
         this.yVelocity = 3;
-        this.changeImageTimer = new Timer(game.getFps());
-        this.changeImageInCollition = false;
         this.area = new Rectangle(x, y, width, height);
         this.ball = game.getBall();
     }
@@ -38,10 +34,6 @@ public class Player extends Item{
     public void tick() {
         area.setLocation(x, y);
         //check if we need to change the image back
-        if (changeImageTimer != null && changeImageTimer.isActive() && changeImageTimer.doneWaiting()) {
-            //change image back
-            changeImageInCollition = false;
-        }
 
        //checking for presses in keys
         //left press
@@ -59,31 +51,18 @@ public class Player extends Item{
         //right border collision
         if (getX() + getWidth() >= game.getWidth()) {
             setX(game.getWidth() - getWidth());
-            changeImageTimer.setUp(.5);
-            //change picture
-            changeImageInCollition = true;
-
         }
         //left border collision
         if (getX() <= 0) {
             setX(0);
-            changeImageTimer.setUp(.5);
-            //change picture
-            changeImageInCollition = true;
         }
         //up border collision
         if (getY() <= 0) {
             setY(0);
-            changeImageTimer.setUp(.5);
-            //change picture
-            changeImageInCollition = true;
         }
         //down border collission
         if (getY() + getHeight() >= game.getHeight()) {
             setY(game.getHeight() - getHeight());
-            changeImageTimer.setUp(.5);
-            //change picture
-            changeImageInCollition = true;
         }
         
         
@@ -99,10 +78,6 @@ public class Player extends Item{
 
     @Override
     public void render(Graphics g) {
-        //check if the flag is active to change the image in a collition
-        if(changeImageInCollition)
-            g.drawImage(Assets.playerSecond, getX(), getY(), getWidth(), getHeight(), null);
-        else
             g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
     }
 
