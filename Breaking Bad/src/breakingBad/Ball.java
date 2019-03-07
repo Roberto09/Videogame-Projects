@@ -27,6 +27,7 @@ public class Ball extends Item{
     
     // ball animation
     private Animation rotatingBall;
+    private boolean stickToBar;
 
     public Ball(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
@@ -34,15 +35,27 @@ public class Ball extends Item{
         this.height = height;
         this.game = game;
         this.xVelocity = 0;
-        this.yVelocity = -8;
+        this.yVelocity = 0;
         this.xDisplacement = 0;
         this.yDisplacement = 0;
+        this.stickToBar = true;
         this.area = new Rectangle(x, y, width, height);
         this.rotatingBall = new Animation(Assets.ball,200);
     }
     
     public void tick() {
         area.setLocation(x, y);
+        //check if the ball should be stick to the bar
+        if(stickToBar){
+            setX(game.getPlayer().getX() + game.getPlayer().getWidth() / 2 - this.getWidth()/2);
+            setY(game.getPlayer().getY() - game.getPlayer().getHeight() + this.getHeight());
+            if(game.getKeyManager().space && !game.getKeyManager().spacePrev){
+                xVelocity = 8;
+                stickToBar = false;
+            }
+            return;
+        }
+        
         //setting xvelocity
         xDisplacement += xVelocity;
         setX((int) (getX() + Math.round(xDisplacement)));
@@ -74,9 +87,10 @@ public class Ball extends Item{
         }
         //down border collission
         if(getY() + getHeight() >= game.getHeight()){
-            setY(game.getHeight() - getHeight());
-            yDisplacement *= -1;
-            yVelocity *= -1;
+            yVelocity = 0;
+            xVelocity = 0;
+            y = game.getHeight() + 100;
+            if(!game.getGameIsOver()) game.setGameIsOver(true);
         }
     }
 
@@ -92,13 +106,21 @@ public class Ball extends Item{
         setY(RandomGenerator.generate(1, game.getHeight() - getHeight()));
     }
     
-    public void reset(int x, int y, double xV, double yV, double xDisp, double yDisp){
+    public void reset(int x, int y, double xV, double yV, double xDisp, double yDisp, boolean stickToBar){
         this.x = x;
         this.y = y;
         this.xVelocity = xV;
         this.yVelocity = yV;
         this.xDisplacement = xDisp;
         this.yDisplacement = yDisp;
+        this.stickToBar = stickToBar;
+    }
+    public void reset(){
+        stickToBar = true;
+        yVelocity = 0;
+        xVelocity = 0;
+        yDisplacement = 0;
+        xDisplacement = 0;
     }
     
     public void changeVelocity(double newX, double newY){
@@ -156,5 +178,9 @@ public class Ball extends Item{
     
     public double getyDisplacement() {
         return yDisplacement;
+    }
+    
+    public boolean getStickToBar(){
+        return stickToBar;
     }
 }

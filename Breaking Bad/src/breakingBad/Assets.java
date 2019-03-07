@@ -15,6 +15,9 @@ public class Assets {
     public static BufferedImage ball[];
     public static BufferedImage livesText;
     public static BufferedImage gameOver;
+    public static BufferedImage pauseImage;
+    public static BufferedImage saveImage;
+    public static BufferedImage loadImage;
     public static ArrayList<BufferedImage> bricks;
 
     //Sound clips
@@ -32,7 +35,7 @@ public class Assets {
         player = ImageLoader.loadImage("/Images/barra.JPG");
         playerSecond = ImageLoader.loadImage("/Images/explosion1.png");
         livesText = ImageLoader.loadImage("/Images/LivesLeft.png");
-        gameOver = ImageLoader.loadImage("/Images/gameover.png");
+        gameOver = ImageLoader.loadImage("/Images/gameover.JPG");
         bricks.add(ImageLoader.loadImage("/Images/white-block.png"));
         bricks.add(ImageLoader.loadImage("/Images/blue-block.png"));
         bricks.add(ImageLoader.loadImage("/Images/red-block.png"));
@@ -44,6 +47,9 @@ public class Assets {
         for(int i=0; i<8; i++){
             ball[i] = spritesheet.crop(i*300, 0, 300, 300);
         }
+        pauseImage = ImageLoader.loadImage("/Images/Pausa.JPG");
+        saveImage = ImageLoader.loadImage("/Images/Guardar.JPG");
+        loadImage = ImageLoader.loadImage("/Images/Cargar.JPG");
 
         //Sounds
         explosionSound = new SoundClip("/Sounds/explosion2.wav");

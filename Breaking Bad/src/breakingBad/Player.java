@@ -24,8 +24,8 @@ public class Player extends Item{
         this.width = width;
         this.height = height;
         this.game = game;
-        this.xVelocity = 3;
-        this.yVelocity = 3;
+        this.xVelocity = 9;
+        this.yVelocity = 9;
         this.area = new Rectangle(x, y, width, height);
         this.ball = game.getBall();
     }
