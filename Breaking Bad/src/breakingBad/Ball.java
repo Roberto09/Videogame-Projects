@@ -24,6 +24,9 @@ public class Ball extends Item{
     private double yVelocity;
     private double xDisplacement;
     private double yDisplacement;
+    
+    // ball animation
+    private Animation rotatingBall;
     private boolean stickToBar;
 
     public Ball(int x, int y, int direction, int width, int height, Game game) {
@@ -37,6 +40,7 @@ public class Ball extends Item{
         this.yDisplacement = 0;
         this.stickToBar = true;
         this.area = new Rectangle(x, y, width, height);
+        this.rotatingBall = new Animation(Assets.ball,200);
     }
     
     public void tick() {
@@ -92,7 +96,8 @@ public class Ball extends Item{
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.ball, getX(), getY(), getWidth(), getHeight(), null);
+        this.rotatingBall.tick();
+        g.drawImage(rotatingBall.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
     }
 
     public void resetPosition() {
